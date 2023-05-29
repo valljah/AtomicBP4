@@ -6,7 +6,7 @@
 #include <semaphore.h>
 #include <time.h>
 
-const int MAX_CNT = 100*1000*0000;
+const int MAX_CNT = 100*1000*1000;
 
 int64_t balance;
 sem_t global_sem;
@@ -42,7 +42,7 @@ int main(int argc, char ** argv) {
         repetitions = strtoul(argv[3], NULL, 10);
 
     balance = original_balance;
-    printf("Input: n_threads: %u, balance: %f\n", n_threads, balance);
+    printf("Input: n_threads: %u, balance: %lld\n", n_threads, balance);
 
     pthread_array = calloc(n_threads, sizeof(pthread_t));
     random_values = calloc(n_threads, sizeof(int64_t));

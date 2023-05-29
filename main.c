@@ -32,13 +32,11 @@ int main(int argc, char ** argv) {
     int64_t *random_values, random_sign, original_balance = 2000, difference = 0;
     int64_t **results;
 
-
-
     if (argc >= 2)
         n_threads = strtoul(argv[1], NULL, 10);
 
     if (argc >= 3)
-        original_balance = strtol(argv[2], NULL);
+        original_balance = strtol(argv[2], NULL, 10);
 
     if (argc >= 4)
         repetitions = strtoul(argv[3], NULL, 10);

@@ -39,7 +39,7 @@ int main(int argc, char ** argv) {
     pthread_array = calloc(n_threads, sizeof(pthread_t));
     random_values = calloc(n_threads, sizeof(double));
     results = calloc(n_threads, sizeof(double *));
-    sem_init(&global_sem, 0, 0);
+    sem_init(&global_sem, 0, 1);
 
     srand(time(NULL));
     for (int i = 0; i < MAX_CNT; i++) {

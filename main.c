@@ -1,54 +1,61 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdatomic.h>
+#include <inttypes.h>
 #include <pthread.h>
 #include <semaphore.h>
-#include <stdlib.h>
 #include <time.h>
 
 const int MAX_CNT = 100*1000*0000;
 
-double balance;
+int64_t balance;
 sem_t global_sem;
 
 void *change_balance(void *args) {
-    double *amt = (double *) args;
-    double *new_balance = malloc(sizeof(double));
+    int64_t *amt = (int64_t *) args;
 
     sem_wait(&global_sem);
     balance = balance + *amt;
-    *new_balance = balance;
+    int64_t new_balance = balance;
     sem_post(&global_sem);
 
     return (void *) new_balance;
 }
 
+void *change_balance_atomic(void *args) {
+
+}
+
 int main(int argc, char ** argv) {
     unsigned int n_threads = 4, repetitions = MAX_CNT;
     pthread_t *pthread_array;
-    double *random_values, random_sign, original_balance = 2000.0, difference = 0.0;
-    double **results;
+    int64_t *random_values, random_sign, original_balance = 2000, difference = 0;
+    int64_t **results;
+
+
 
     if (argc >= 2)
-        n_threads = strtol(argv[1], NULL, 10);
+        n_threads = strtoul(argv[1], NULL, 10);
 
     if (argc >= 3)
-        original_balance = strtod(argv[2], NULL);
+        original_balance = strtol(argv[2], NULL);
 
     if (argc >= 4)
-        repetitions = strtol(argv[3], NULL, 10);
+        repetitions = strtoul(argv[3], NULL, 10);
 
     balance = original_balance;
     printf("Input: n_threads: %u, balance: %f\n", n_threads, balance);
 
     pthread_array = calloc(n_threads, sizeof(pthread_t));
-    random_values = calloc(n_threads, sizeof(double));
-    results = calloc(n_threads, sizeof(double *));
+    random_values = calloc(n_threads, sizeof(int64_t));
+    results = calloc(n_threads, sizeof(int64_t *));
     sem_init(&global_sem, 0, 1);
 
     srand(time(NULL));
     for (int i = 0; i < repetitions; i += (int) n_threads) {
         for (size_t si = 0; si < n_threads; si++) {
             random_sign = rand() % 1000;
-            random_sign = (random_sign > 500) ? 1.0 : -1.0;
+            random_sign = (random_sign > 500) ? 1 : -1;
             random_values[si] = random_sign * (rand() % 500);
             difference += random_values[si];
             pthread_create(&pthread_array[si], NULL, &change_balance, &random_values[si]);

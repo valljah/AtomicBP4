@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-const int MAX_CNT = 100*1000*1000;
+const int MAX_CNT = 100*1000;
 
 double balance;
 sem_t global_sem;

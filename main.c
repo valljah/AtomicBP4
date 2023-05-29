@@ -42,7 +42,7 @@ int main(int argc, char ** argv) {
     sem_init(&global_sem, 0, 1);
 
     srand(time(NULL));
-    for (int i = 0; i < MAX_CNT; i++) {
+    for (int i = 0; i < MAX_CNT; i += (int) n_threads) {
         for (size_t si = 0; si < n_threads; si++) {
             random_sign = rand() % 1000;
             random_sign = (random_sign > 500) ? 1.0 : -1.0;

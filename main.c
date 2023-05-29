@@ -33,6 +33,9 @@ int main(int argc, char ** argv) {
     if (argc == 3)
         original_balance = strtod(argv[2], NULL);
 
+    balance = original_balance;
+    printf("Input: n_threads: %u, balance: %f\n", n_threads, balance);
+
     pthread_array = calloc(n_threads, sizeof(pthread_t));
     random_values = calloc(n_threads, sizeof(double));
     results = calloc(n_threads, sizeof(double *));
@@ -54,6 +57,12 @@ int main(int argc, char ** argv) {
             free(results[si]);
         }
     }
+
+    printf("Original balance: %+10.3f\n"
+           "New balance: %+10.3f\n"
+           "Measured difference: %+10.3f\n"
+           "Actual difference: %+10.3f\n",
+           original_balance, balance, difference, balance - original_balance);
 
     free(pthread_array);
     free(random_values);

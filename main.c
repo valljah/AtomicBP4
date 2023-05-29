@@ -53,7 +53,6 @@ int main(int argc, char ** argv) {
 
         for (size_t si = 0; si < n_threads; si++) {
             pthread_join(pthread_array[si], (void**) &results[si]);
-            printf("New balance: %f\n", *results[si]);
             free(results[si]);
         }
     }

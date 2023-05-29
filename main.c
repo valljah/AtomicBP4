@@ -65,10 +65,10 @@ int main(int argc, char ** argv) {
         }
     }
 
-    printf("Original balance: %+10.3f\n"
-           "New balance: %+10.3f\n"
-           "Measured difference: %+10.3f\n"
-           "Actual difference: %+10.3f\n",
+    printf("Original balance: \t%+lld\n"
+           "New balance: \t\t%+lld\n"
+           "Measured difference: \t%+lld\n"
+           "Actual difference: \t%+lld\n",
            original_balance, balance, difference, balance - original_balance);
 
     free(pthread_array);
